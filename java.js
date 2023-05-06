@@ -25,9 +25,7 @@ document.getElementById('btn').addEventListener('click', function() {
 });
 
       b.addEventListener('click', function() {
-        text.value = ''; 
-        textarea.value = '';
-        console.clear(); 
+        location.reload();
       });
 //Arreglo con tokens a validar
 
