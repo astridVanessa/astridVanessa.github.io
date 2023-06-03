@@ -1,3 +1,4 @@
+/*
 let input = document.getElementById('input');
 let textarea = document.getElementById('textarea');
 let b = document.getElementById('l');
@@ -91,10 +92,10 @@ input.addEventListener("change", () => {
     contenido.onerror = (e) => alert(e.target.error.name);
     contenido.readAsText(archivo);
 });
-
+*/
 
 //analizador sintactico
-//let input = document.getElementById('input');
+let input = document.getElementById('input');
 let textarea = document.getElementById('ti');
 let lines, archivo, i, resultado;
 function redirigirConsola() {
