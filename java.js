@@ -92,6 +92,8 @@ input.addEventListener("change", () => {
     contenido.readAsText(archivo);
 });
 
+
+//analizador sintactico
 let input = document.getElementById('input');
 let textarea = document.getElementById('ti');
 let lines, archivo, i, resultado;
@@ -175,7 +177,7 @@ input.addEventListener("change", () => {
               arreglo = arreglo + linea + " ";
           
             });
-               document.getElementById("textarea1").value = "EJECUCION--\n" + msjERROR+"\n"+"Total errores encontrados: " + ERRORcont +"\n--END--";
+               document.getElementById("ti").value = "EJECUCION--\n" + msjERROR+"\n"+"Total errores encontrados: " + ERRORcont +"\n--END--";
               console.log("ERRORES: " + ERRORcont);
           }
 
