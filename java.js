@@ -91,3 +91,75 @@ input.addEventListener("change", () => {
     contenido.onerror = (e) => alert(e.target.error.name);
     contenido.readAsText(archivo);
 });
+
+let input = document.getElementById('input');
+let textarea = document.getElementById('textarea');
+let lines, archivo, i, resultado;
+
+
+input.addEventListener("change", () => {
+    
+    let archivos = input.files;
+    if(archivos.length == 0) return;
+
+    let archivo = archivos[0];
+    let contenido = new FileReader();
+    contenido.onload = (e) => {
+        archivo = e.target.result;
+        
+        lines = archivo.split(/\r\n|\n/)
+        textarea.value = lines.join("\n"); 
+
+            const entero = /^\<QC-Declaraciones\:\sQuetzal(\s[a-zA-Z]+([0-9]*[a-zA-Z]*)\>)|([\>\>]\s*?\d*\>)$/
+            const decimal = /^\<QC-Declaraciones\:\sCentavo(\s[a-zA-Z]+([0-9]*[a-zA-Z]*)\>)|([\>\>]\s*?\d+.\d+\>)$/
+            const flotante = /^<QC-Declaraciones\:\sChoca\s[a-zA-z]+\w*(>|>>\d+.\d+>)$/
+            const booleano = /^<QC-Declaraciones: Len [a-zA-Z]+\w*(>>(Simon|Casaca>)|>)$/
+            const stringg = /^<QC-Declaraciones: Pisto \w* >>\s*"(.*?)">$/
+            const salidaN = /^<QC-salida:\s\w*>$/
+            const salidaTexto = /^\<QC-salida\:\s+"(.*?)">$/
+            const salidav2 = /^<QC-salida:\s*"(.*?)" (Q\+ [a-zA-Z]\w*\s*)*>$/
+            const salidav3 = /^<QC-salida:\s*\d+ Q\+ "(.*?)" (Q\+ [a-zA-Z]\w* )"(.*?)" (Q\+ [a-zA-Z]+\w*)>$/
+            const ifI = /^<QC-paso: \[[a-zA-Z]\w* (Qmas|Qopc|Q<|Q>|Q#<|Q#>|Q>>|QNEL) (([a-zA-Z]\w*)|(\d+))\]>$/
+            const ifF = /^<QC-paso-Fin>$/
+            const ifelse = /^<QC-paso-porque-paso>$/
+            const ifelseif = /^<QC-paso-porque-paso>\s*<QC-paso: \[\w+ (Qmas|Qopc|Q<|Q>|Q#<|Q#>|Q>>|QNEL) \w+\]>$/
+            const ifelseifv2 = /^<QC-paso-porque-paso> <QC-paso: \[[a-zA-Z]\w* (Q<|Q>|Q#<|Q#>|Q>>|QNEL) (\d+|[a-zA-Z]+\w*)\] (Qmas|Qopc) \[[a-zA-Z]+\w* (Q<|Q>|Q#<|Q#>|Q>>|QNEL) (\d+|[a-zA-Z]+\w*)\]>$/
+            const ifelseifv3 = /^<QC-paso-porque-paso> <QC-paso: \[[a-zA-Z]\w* (Q<|Q>|Q#<|Q#>|Q>>|QNEL) (\d+|[a-zA-Z]+\w*)\]$/
+            const metodo = /^(Regalado|Reservado|Tapado) (Quieto|Acabado) (Quetzal|Centavo|Choca|Pisto|Len) [a-zA-Z]+\w*\(((Quetzal|Centavo|Choca|Pisto|Len) [a-zA-Z]+\w*(, (Choca|Quetzal|Centavo|Len) [a-zA-Z]+\d*)*)\)\{$/
+            const asignacion = /^\s*([a-zA-Z]+\w*>>"(.*?)")|(\w+>>\d+)|(([a-zA-Z]\w*>>\w+ (Q#|Q\?|Q\@|Q\-) [a-zA-Z]\w*))|([a-zA-Z]\w*>>[a-zA-Z]\w*)$/
+            const whileI = /^<QC-Repite: hastaQ\[[a-zA-Z]+\w* (Q<|Q>|Q#<|Q#>|Q>>|QNEL) (\d+|[a-zA-Z]\W*)\] >$/
+            const whileF = /^<QC-Repite-Fin>$/
+            const operacionAsignacion = /^[a-zA-Z]\w* >> ([a-zA-Z]\w*|\d+) (Q#|Q\?|Q\@|Q\-) ((\d+\.\d+|\d+)|[a-zA-Z]+)$/
+            const forI = /^<QC-Variar: [a-zA-Z]+ desde: [0-9]+ ((fin: \d+ paso: \d+>)|(fin: Q< [a-zA-Z]\w* paso: \d+)>)$/
+            const forF = /^<QC-Variar-Fin>$/
+            const llave = /^\}$/
+            const espacio = /^\s*$/
+            const comentario = /^\s*\-(.)*$/
+
+            let msjERROR="";
+            let ERRORcont = 0;
+            let CIcont = 0;
+            let arreglo = "";
+            lines.forEach(function(linea){
+          
+              if (entero.test(linea) || espacio.test(linea) || decimal.test(linea) || flotante.test(linea) || salidaN.test(linea) || salidaTexto.test(linea) ||
+                    comentario.test(linea) || stringg.test(linea) || ifI.test(linea) || ifF.test(linea) || ifelse.test(linea) || ifelseif.test(linea) || metodo.test(linea) || 
+                    asignacion.test(linea) || booleano.test(linea) || whileI.test(linea) || salidav2.test(linea) || whileF.test(linea) || operacionAsignacion.test(linea) || 
+                    forI.test(linea) || salidav3.test(linea) || forF.test(linea) || llave.test(linea) || ifelseifv2.test(linea) || ifelseifv3.test(linea)) {
+              console.log("LINEA CORRECTA: \t " +CIcont + " " + linea);
+              }else{
+                ERRORcont = ERRORcont+1;
+                msjERROR = msjERROR + "ERROR: \t " + linea + " Linea: " +CIcont + "\n";
+                console.log("Error: " + linea + " Linea: " +CIcont);
+              }
+              CIcont = CIcont+1;          
+              arreglo = arreglo + linea + " ";
+          
+            });
+               document.getElementById("textarea1").value = "EJECUCION--\n" + msjERROR+"\n"+"Total errores encontrados: " + ERRORcont +"\n--END--";
+              console.log("ERRORES: " + ERRORcont);
+          }
+
+    contenido.onerror = (e) => alert(e.target.error.name);
+    contenido.readAsText(archivo);
+});
