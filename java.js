@@ -93,7 +93,7 @@ input.addEventListener("change", () => {
 });
 
 let input = document.getElementById('input');
-let textarea = document.getElementById('textarea');
+let textarea = document.getElementById('ti');
 let lines, archivo, i, resultado;
 
 
