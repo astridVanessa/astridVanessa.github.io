@@ -111,7 +111,7 @@ function mostrarConsolaEnTextarea() {
 
 redirigirConsola();
 
-document.getElementById('btn').addEventListener('click', function() {
+document.getElementById('btnt').addEventListener('click', function() {
   mostrarConsolaEnTextarea();
 });
 
