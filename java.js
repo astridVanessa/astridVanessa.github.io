@@ -94,7 +94,7 @@ input.addEventListener("change", () => {
 
 
 //analizador sintactico
-let input = document.getElementById('input');
+//let input = document.getElementById('input');
 let textarea = document.getElementById('ti');
 let lines, archivo, i, resultado;
 function redirigirConsola() {
