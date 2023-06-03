@@ -95,6 +95,25 @@ input.addEventListener("change", () => {
 let input = document.getElementById('input');
 let textarea = document.getElementById('ti');
 let lines, archivo, i, resultado;
+function redirigirConsola() {
+  var log = console.log; 
+  console.log = function() {
+    for (var i = 0; i < arguments.length; i++) {
+      consolaTexto += arguments[i] + '\n'; 
+    }
+    log.apply(console, arguments); 
+  }
+}
+
+function mostrarConsolaEnTextarea() {
+  document.getElementById('ti').value = consolaTexto; 
+}
+
+redirigirConsola();
+
+document.getElementById('btn').addEventListener('click', function() {
+  mostrarConsolaEnTextarea();
+});
 
 
 input.addEventListener("change", () => {
